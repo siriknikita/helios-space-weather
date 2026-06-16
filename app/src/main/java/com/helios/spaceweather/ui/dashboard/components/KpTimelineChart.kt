@@ -58,6 +58,7 @@ fun KpTimelineChart(
     val nowIndex = history.size
     val haptics = rememberHeliosHaptics()
     val textMeasurer = rememberTextMeasurer()
+    val nowLabel = stringResource(R.string.label_now)
 
     var selectedIndex by remember(points) { mutableStateOf<Int?>(null) }
 
@@ -171,7 +172,7 @@ fun KpTimelineChart(
                     strokeWidth = 1.dp.toPx(),
                     pathEffect = PathEffect.dashPathEffect(floatArrayOf(4f, 6f)),
                 )
-                drawTimelineLabel(textMeasurer, "NOW", dividerX, top)
+                drawTimelineLabel(textMeasurer, nowLabel, dividerX, top)
             }
 
             // Baseline.
