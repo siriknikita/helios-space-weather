@@ -45,14 +45,13 @@ class NotificationPreferences @Inject constructor(
      * Pure read against persisted state; does not record anything.
      */
     suspend fun shouldNotify(currentKp: Double, nowMillis: Long): Boolean {
-        if (currentKp < KpThreatLevel.STORM_THRESHOLD) return false
         val prefs = dataStore.data.first()
-        val lastKp = prefs[Keys.LAST_KP] ?: 0.0
-        val lastAt = prefs[Keys.LAST_AT] ?: 0L
-
-        val outsideCoolDown = nowMillis - lastAt >= ANTI_SPAM_WINDOW_MILLIS
-        val escalated = currentKp > lastKp
-        return outsideCoolDown || escalated
+        return decide(
+            currentKp = currentKp,
+            lastNotifiedKp = prefs[Keys.LAST_KP] ?: 0.0,
+            lastNotifiedAtMillis = prefs[Keys.LAST_AT] ?: 0L,
+            nowMillis = nowMillis,
+        )
     }
 
     /** Record that an alert fired for [kp] at [nowMillis]. */
@@ -66,5 +65,23 @@ class NotificationPreferences @Inject constructor(
     companion object {
         const val STORE_NAME = "helios_notification_prefs"
         val ANTI_SPAM_WINDOW_MILLIS: Long = TimeUnit.HOURS.toMillis(12)
+
+        /**
+         * Pure anti-spam decision (no I/O), extracted so it can be unit-tested exhaustively:
+         * fire only at storm level AND (outside the cool-down window OR escalated beyond the
+         * last alerted Kp).
+         */
+        fun decide(
+            currentKp: Double,
+            lastNotifiedKp: Double,
+            lastNotifiedAtMillis: Long,
+            nowMillis: Long,
+            windowMillis: Long = ANTI_SPAM_WINDOW_MILLIS,
+        ): Boolean {
+            if (currentKp < KpThreatLevel.STORM_THRESHOLD) return false
+            val outsideCoolDown = nowMillis - lastNotifiedAtMillis >= windowMillis
+            val escalated = currentKp > lastNotifiedKp
+            return outsideCoolDown || escalated
+        }
     }
 }
