@@ -22,4 +22,11 @@
     <string name="threat_desc_storm_strong">Strong storm. Aurora at lower latitudes; satellite and radio disruptions likely.</string>
     <string name="threat_desc_storm_severe">Severe storm. Widespread aurora; power-grid and navigation systems affected.</string>
     <string name="threat_desc_storm_extreme">Extreme storm. Aurora near the equator; major infrastructure impact possible.</string>
+
+    <!-- Storm notification + channel. -->
+    <string name="storm_channel_name">Geomagnetic Storm Alerts</string>
+    <string name="storm_channel_desc">Warnings when the planetary Kp index reaches storm levels (Kp ≥ 5).</string>
+    <string name="storm_notification_title">Geomagnetic Storm</string>
+    <!-- %1$s = Kp value (e.g. "6.7"), %2$s = threat level (e.g. "Moderate Storm"). -->
+    <string name="storm_notification_text">Kp index has reached %1$s — %2$s.</string>
 </resources>
