@@ -21,8 +21,13 @@ default:
 setup:
     ./setup.sh
 
-# Compile the debug APK.
-build:
+# Compile the debug APK, then copy the built APK file to the clipboard (macOS).
+build: _assemble
+    @osascript -e "set the clipboard to (POSIX file \"$(pwd)/{{debug_apk}}\")"
+    @echo "Copied debug APK to clipboard."
+
+# Assemble the debug APK without the clipboard copy (used by install / run / update).
+_assemble:
     ./gradlew :app:assembleDebug
 
 # Alias kept for discoverability.
@@ -32,8 +37,8 @@ build-debug: build
 build-release:
     ./gradlew :app:assembleRelease
 
-# Incremental rebuild — only what changed since the last build.
-update: build
+# Incremental rebuild — only what changed (no clipboard copy).
+update: _assemble
 
 # Full clean build from scratch.
 rebuild: clean build
@@ -57,8 +62,8 @@ check: lint test build
 devices:
     adb devices -l
 
-# Install the debug APK onto the connected device (build first if needed).
-install: build
+# Install the debug APK onto the connected device (assembles first if needed).
+install: _assemble
     adb install -r "{{debug_apk}}"
 
 # Build, install, and launch the app on the connected device.
@@ -77,15 +82,13 @@ logs:
 apk-path:
     @echo "$(pwd)/{{debug_apk}}"
 
-# Copy the absolute debug-APK path to the clipboard (macOS pbcopy).
-copy-apk-path: build
+# Copy the absolute debug-APK path (text) to the clipboard (macOS pbcopy).
+copy-apk-path: _assemble
     @printf '%s' "$(pwd)/{{debug_apk}}" | pbcopy
     @echo "Copied APK path to clipboard."
 
-# Copy the actual debug APK file to the macOS clipboard (paste into Finder/Mail/etc.).
+# Copy the debug APK file to the clipboard — alias for `build`, which now does this.
 copy-apk: build
-    @osascript -e "set the clipboard to (POSIX file \"$(pwd)/{{debug_apk}}\")"
-    @echo "Copied APK file to clipboard."
 
 # Regenerate the Gradle wrapper at a specific version, e.g. `just wrapper 8.11.1`.
 wrapper version="8.11.1":
