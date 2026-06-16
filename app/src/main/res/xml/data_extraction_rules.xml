@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Data extraction rules (Android 12+). Cloud backup and device-to-device transfer both
+  exclude the notification-state DataStore so anti-spam timestamps never travel with a
+  restore/transfer.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="file" path="datastore/helios_notification_prefs.preferences_pb" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="file" path="datastore/helios_notification_prefs.preferences_pb" />
+    </device-transfer>
+</data-extraction-rules>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Platform-level colors used by the launcher icon and the pre-Compose window. -->
+    <color name="helios_true_black">#FF000000</color>
+    <color name="ic_launcher_background">#FF000000</color>
+    <color name="helios_amber">#FFFFB300</color>
+</resources>
