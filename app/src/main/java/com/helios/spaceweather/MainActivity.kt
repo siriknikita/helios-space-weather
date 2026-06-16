@@ -5,12 +5,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.helios.spaceweather.core.theme.HeliosTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -36,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
 @Composable
 private fun HeliosScaffoldPlaceholder() {
-    MaterialTheme(colorScheme = darkColorScheme()) {
+    HeliosTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             Text(text = "Helios")
         }
