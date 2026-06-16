@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Ukrainian (uk) translations. Brand name (app_name, dashboard_title) and language endonyms
+  are intentionally omitted — they're translatable="false" and fall back to the base values/.
+-->
+<resources>
+    <!-- Threat-level labels. -->
+    <string name="threat_quiet">Спокій</string>
+    <string name="threat_unsettled">Збурення</string>
+    <string name="threat_active">Активність</string>
+    <string name="threat_storm_minor">Слабка буря</string>
+    <string name="threat_storm_moderate">Помірна буря</string>
+    <string name="threat_storm_strong">Сильна буря</string>
+    <string name="threat_storm_severe">Дуже сильна буря</string>
+    <string name="threat_storm_extreme">Екстремальна буря</string>
+
+    <!-- Threat-level descriptions. -->
+    <string name="threat_desc_quiet">Геомагнітне поле спокійне. Полярних сяйв на середніх широтах не очікується.</string>
+    <string name="threat_desc_unsettled">Поле злегка збурене. Полярне сяйво малоймовірне поза приполярними регіонами.</string>
+    <string name="threat_desc_active">Активні умови. Полярне сяйво можливе у високих широтах.</string>
+    <string name="threat_desc_storm_minor">Слабка геомагнітна буря. Сяйво у високих широтах; незначні коливання в електромережах.</string>
+    <string name="threat_desc_storm_moderate">Помірна буря. Сяйво може сягати середніх широт; можливі сигнали про перенапругу.</string>
+    <string name="threat_desc_storm_strong">Сильна буря. Сяйво у нижчих широтах; імовірні збої супутників і радіозв’язку.</string>
+    <string name="threat_desc_storm_severe">Дуже сильна буря. Масштабні сяйва; вплив на електромережі та навігацію.</string>
+    <string name="threat_desc_storm_extreme">Екстремальна буря. Сяйво поблизу екватора; можливий значний вплив на інфраструктуру.</string>
+
+    <!-- Dashboard. -->
+    <string name="dashboard_subtitle">Планетарний індекс Kp</string>
+    <string name="unit_kp">Кп</string>
+    <string name="section_timeline">Історія та прогноз</string>
+    <string name="legend_observed">Спостереження</string>
+    <string name="legend_forecast">Прогноз</string>
+    <string name="label_now">ЗАРАЗ</string>
+    <string name="last_updated">Оновлено %1$s</string>
+    <string name="last_updated_never">Ще не оновлювалося</string>
+    <string name="status_loading">Зчитування космічної погоди…</string>
+    <string name="status_offline_cached">Офлайн — показано останні збережені дані.</string>
+    <string name="error_fetch_failed">Не вдалося зв’язатися з NOAA. Показано останні збережені дані.</string>
+    <string name="empty_no_data">Поки немає даних про космічну погоду.</string>
+    <string name="action_retry">Повторити</string>
+    <string name="cd_refresh">Оновити</string>
+    <string name="cd_settings">Налаштування</string>
+    <string name="cd_gauge">Поточний індекс Kp %1$s, %2$s</string>
+    <string name="timeline_readout">Kp %1$s о %2$s</string>
+
+    <!-- Settings. -->
+    <string name="settings_title">Налаштування</string>
+    <string name="settings_language_header">Мова</string>
+    <string name="settings_language_subtitle">Оберіть мову, якою відображатиметься Helios.</string>
+    <string name="settings_about_header">Про застосунок</string>
+    <string name="settings_about_body">Helios відстежує планетарний індекс Kp від NOAA та попереджає про геомагнітні бурі.</string>
+    <string name="settings_version">Версія %1$s</string>
+    <string name="cd_back">Назад</string>
+
+    <!-- Storm notification + channel. -->
+    <string name="storm_channel_name">Сповіщення про геомагнітні бурі</string>
+    <string name="storm_channel_desc">Попередження, коли планетарний індекс Kp сягає рівня бурі (Kp ≥ 5).</string>
+    <string name="storm_notification_title">Геомагнітна буря</string>
+    <string name="storm_notification_text">Індекс Kp сягнув %1$s — %2$s.</string>
+</resources>

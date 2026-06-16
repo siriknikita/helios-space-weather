@@ -46,6 +46,19 @@
     <!-- %1$s = Kp value, %2$s = time. -->
     <string name="timeline_readout">Kp %1$s at %2$s</string>
 
+    <!-- Settings. -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_language_header">Language</string>
+    <string name="settings_language_subtitle">Choose the language Helios is displayed in.</string>
+    <!-- Language names shown as endonyms; identical in every locale. -->
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_ukrainian" translatable="false">Українська</string>
+    <string name="settings_about_header">About</string>
+    <string name="settings_about_body">Helios tracks the NOAA planetary Kp index and warns you about geomagnetic storms.</string>
+    <!-- %1$s = version name, e.g. "1.0.0". -->
+    <string name="settings_version">Version %1$s</string>
+    <string name="cd_back">Back</string>
+
     <!-- Storm notification + channel. -->
     <string name="storm_channel_name">Geomagnetic Storm Alerts</string>
     <string name="storm_channel_desc">Warnings when the planetary Kp index reaches storm levels (Kp ≥ 5).</string>
