@@ -23,6 +23,29 @@
     <string name="threat_desc_storm_severe">Severe storm. Widespread aurora; power-grid and navigation systems affected.</string>
     <string name="threat_desc_storm_extreme">Extreme storm. Aurora near the equator; major infrastructure impact possible.</string>
 
+    <!-- Dashboard. -->
+    <string name="dashboard_title">Helios</string>
+    <string name="dashboard_subtitle">Planetary Kp Index</string>
+    <string name="unit_kp">KP</string>
+    <string name="section_timeline">History &amp; Forecast</string>
+    <string name="legend_observed">Observed</string>
+    <string name="legend_forecast">Forecast</string>
+    <string name="label_now">NOW</string>
+    <!-- %1$s = a localized relative time, e.g. "5 minutes ago". -->
+    <string name="last_updated">Updated %1$s</string>
+    <string name="last_updated_never">Never updated</string>
+    <string name="status_loading">Reading space weather…</string>
+    <string name="status_offline_cached">Offline — showing last saved data.</string>
+    <string name="error_fetch_failed">Couldn\'t reach NOAA. Showing last saved data.</string>
+    <string name="empty_no_data">No space-weather data yet.</string>
+    <string name="action_retry">Retry</string>
+    <string name="cd_refresh">Refresh</string>
+    <string name="cd_settings">Settings</string>
+    <!-- %1$s = Kp value, %2$s = threat level label. -->
+    <string name="cd_gauge">Current Kp index %1$s, %2$s</string>
+    <!-- %1$s = Kp value, %2$s = time. -->
+    <string name="timeline_readout">Kp %1$s at %2$s</string>
+
     <!-- Storm notification + channel. -->
     <string name="storm_channel_name">Geomagnetic Storm Alerts</string>
     <string name="storm_channel_desc">Warnings when the planetary Kp index reaches storm levels (Kp ≥ 5).</string>

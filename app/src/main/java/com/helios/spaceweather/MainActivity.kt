@@ -6,10 +6,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.helios.spaceweather.core.theme.HeliosTheme
+import com.helios.spaceweather.core.theme.TrueBlack
+import com.helios.spaceweather.notification.RequestNotificationPermission
+import com.helios.spaceweather.ui.navigation.HeliosNavHost
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -17,9 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
  *
  * Extends [AppCompatActivity] (not ComponentActivity) so the app can use
  * `AppCompatDelegate.setApplicationLocales` for runtime per-app language switching with
- * backward compatibility below Android 13. The full themed navigation graph is introduced
- * in later changes; this scaffold renders a minimal dark placeholder so the project builds
- * and runs end-to-end from the first commit.
+ * backward compatibility below Android 13.
  */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -28,16 +28,18 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
-            HeliosScaffoldPlaceholder()
+            HeliosApp()
         }
     }
 }
 
 @Composable
-private fun HeliosScaffoldPlaceholder() {
+private fun HeliosApp() {
     HeliosTheme {
-        Surface(modifier = Modifier.fillMaxSize()) {
-            Text(text = "Helios")
+        // Ask for POST_NOTIFICATIONS once (Android 13+); no-op below 33.
+        RequestNotificationPermission()
+        Surface(modifier = Modifier.fillMaxSize(), color = TrueBlack) {
+            HeliosNavHost()
         }
     }
 }
