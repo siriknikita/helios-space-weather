@@ -55,6 +55,34 @@ class NoaaKpParsingTest {
     }
 
     @Test
+    fun `parses live 2026 observed product with capitalized Kp field`() {
+        // The real services.swpc.noaa.gov planetary-k-index product (2026) returns objects
+        // keyed "Kp" (capitalized); field matching must be case-insensitive or history is lost.
+        val payload = """
+            [{"time_tag":"2026-06-09T00:00:00","Kp":2.00,"a_running":7,"station_count":8},
+             {"time_tag":"2026-06-09T03:00:00","Kp":6.33,"a_running":9,"station_count":8}]
+        """.trimIndent()
+
+        val readings = json.decodeFromString<NoaaKpProduct>(payload).toReadings()
+        assertEquals(2, readings.size)
+        assertEquals(6.33, readings[1].kp, 0.0001)
+        assertFalse("observed product has no predicted rows", readings[1].isForecast)
+    }
+
+    @Test
+    fun `parses live 2026 forecast product with observed and predicted rows`() {
+        val payload = """
+            [{"time_tag":"2026-06-09T00:00:00","kp":2.00,"observed":"observed","noaa_scale":null},
+             {"time_tag":"2026-06-12T21:00:00","kp":5.00,"observed":"predicted","noaa_scale":null}]
+        """.trimIndent()
+
+        val readings = json.decodeFromString<NoaaKpProduct>(payload).toReadings()
+        assertEquals(2, readings.size)
+        assertFalse(readings[0].isForecast)
+        assertTrue(readings[1].isForecast)
+    }
+
+    @Test
     fun `empty payload yields no rows`() {
         assertEquals(0, json.decodeFromString<NoaaKpProduct>("[]").rows.size)
     }
