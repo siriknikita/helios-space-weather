@@ -2,4 +2,24 @@
 <resources>
     <!-- Application name. Intentionally left untranslated (a brand name) across locales. -->
     <string name="app_name" translatable="false">Helios</string>
+
+    <!-- Threat-level labels (short names shown on the status panel). -->
+    <string name="threat_quiet">Quiet</string>
+    <string name="threat_unsettled">Unsettled</string>
+    <string name="threat_active">Active</string>
+    <string name="threat_storm_minor">Minor Storm</string>
+    <string name="threat_storm_moderate">Moderate Storm</string>
+    <string name="threat_storm_strong">Strong Storm</string>
+    <string name="threat_storm_severe">Severe Storm</string>
+    <string name="threat_storm_extreme">Extreme Storm</string>
+
+    <!-- Threat-level descriptions (one human-readable sentence each). -->
+    <string name="threat_desc_quiet">Geomagnetic field is calm. No aurora expected at mid-latitudes.</string>
+    <string name="threat_desc_unsettled">Slightly unsettled field. Aurora unlikely outside polar regions.</string>
+    <string name="threat_desc_active">Active conditions. Aurora possible at high latitudes.</string>
+    <string name="threat_desc_storm_minor">Minor geomagnetic storm. Aurora visible at high latitudes; weak power-grid fluctuations.</string>
+    <string name="threat_desc_storm_moderate">Moderate storm. Aurora may reach mid-latitudes; possible voltage alarms.</string>
+    <string name="threat_desc_storm_strong">Strong storm. Aurora at lower latitudes; satellite and radio disruptions likely.</string>
+    <string name="threat_desc_storm_severe">Severe storm. Widespread aurora; power-grid and navigation systems affected.</string>
+    <string name="threat_desc_storm_extreme">Extreme storm. Aurora near the equator; major infrastructure impact possible.</string>
 </resources>
