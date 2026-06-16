@@ -104,7 +104,12 @@ object NoaaKpDeserializer : KSerializer<NoaaKpProduct> {
     }
 
     private fun JsonObject.firstValue(vararg keys: String): JsonElement? {
-        for (key in keys) this[key]?.let { return it }
+        for (key in keys) {
+            // Exact match first, then a case-insensitive fallback: the live 2026 API uses
+            // "Kp" (capitalized) on the observed product but "kp" on the forecast product.
+            this[key]?.let { return it }
+            entries.firstOrNull { it.key.equals(key, ignoreCase = true) }?.let { return it.value }
+        }
         return null
     }
 
