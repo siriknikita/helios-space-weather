@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Auto Backup rules (Android 11 and below). The DataStore notification-state file is
+  excluded so a restored device does not inherit stale "last notified" timestamps.
+-->
+<full-backup-content>
+    <exclude domain="file" path="datastore/helios_notification_prefs.preferences_pb" />
+</full-backup-content>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      Base platform theme for the single AppCompatActivity. Compose owns all surface colors
+      via HeliosTheme, so this theme only needs to be an AppCompat parent (required for
+      AppCompatActivity + setApplicationLocales) and paint the window true-black to avoid a
+      light flash before the first frame.
+    -->
+    <style name="Theme.Helios" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/helios_true_black</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>
