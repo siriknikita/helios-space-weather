@@ -21,21 +21,46 @@ default:
 setup:
     ./setup.sh
 
+# Auto-bootstrap on a fresh clone: if local.properties is missing (i.e. setup never ran),
+# run setup.sh so `just build` / `just release` work straight after `git clone`.
+_bootstrap:
+    @[ -f local.properties ] || ./setup.sh
+
 # Compile the debug APK, then copy the built APK file to the clipboard (macOS).
 build: _assemble
     @osascript -e "set the clipboard to (POSIX file \"$(pwd)/{{debug_apk}}\")"
     @echo "Copied debug APK to clipboard."
 
 # Assemble the debug APK without the clipboard copy (used by install / run / update).
-_assemble:
+_assemble: _bootstrap
     ./gradlew :app:assembleDebug
 
 # Alias kept for discoverability.
 build-debug: build
 
-# Compile the minified release APK.
-build-release:
+# Compile the minified, debug-signed release APK.
+build-release: _bootstrap
     ./gradlew :app:assembleRelease
+
+# Build the signed release APK and publish it as a GitHub release with the APK attached.
+# Tag defaults to v<versionName> (read from app/build.gradle.kts); override e.g. `just release v1.2.0`.
+# Requires the GitHub CLI (`gh auth login`). Re-running with an existing tag uploads/overwrites the asset.
+release tag="": build-release
+    #!/usr/bin/env bash
+    set -euo pipefail
+    version="$(sed -n 's/.*versionName = "\(.*\)".*/\1/p' app/build.gradle.kts | head -1)"
+    tag="{{tag}}"; [ -n "$tag" ] || tag="v${version}"
+    asset="helios-space-weather-${tag}.apk"
+    cp "{{release_apk}}" "$asset"
+    if gh release view "$tag" >/dev/null 2>&1; then
+        echo "Release $tag exists — uploading/replacing the APK asset."
+        gh release upload "$tag" "$asset" --clobber
+    else
+        echo "Creating release $tag with $asset"
+        gh release create "$tag" "$asset" --title "$tag" --generate-notes
+    fi
+    rm -f "$asset"
+    echo "Done: $(gh release view "$tag" --json url -q .url)"
 
 # Incremental rebuild — only what changed (no clipboard copy).
 update: _assemble
