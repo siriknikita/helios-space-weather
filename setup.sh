@@ -23,6 +23,15 @@ bold "Helios setup — repo: $REPO_ROOT"
 # ---- 1. JDK 17 --------------------------------------------------------------
 bold "Checking JDK..."
 if ! command -v java >/dev/null 2>&1; then
+    if command -v brew >/dev/null 2>&1; then
+        warn "Java not found — installing openjdk@17 via Homebrew..."
+        brew install openjdk@17 || true
+        # Make the brew JDK discoverable to the system java wrapper.
+        sudo ln -sfn "$(brew --prefix)/opt/openjdk@17/libexec/openjdk.jdk" \
+            /Library/Java/JavaVirtualMachines/openjdk-17.jdk 2>/dev/null || true
+    fi
+fi
+if ! command -v java >/dev/null 2>&1; then
     err "Java not found. Install a JDK 17 (e.g. 'brew install openjdk@17') and re-run."
     exit 1
 fi
@@ -56,6 +65,19 @@ else
     printf 'sdk.dir=%s\n' "$SDK_DIR" > local.properties
     ok "Wrote local.properties (sdk.dir)."
 
+    # Accept SDK licenses non-interactively so a fresh clone can build unattended.
+    SDKMANAGER=""
+    for sm in "$SDK_DIR/cmdline-tools/latest/bin/sdkmanager" "$SDK_DIR/tools/bin/sdkmanager"; do
+        if [ -x "$sm" ]; then SDKMANAGER="$sm"; break; fi
+    done
+    if [ -n "$SDKMANAGER" ]; then
+        if yes | "$SDKMANAGER" --licenses >/dev/null 2>&1; then
+            ok "Android SDK licenses accepted."
+        else
+            warn "Could not auto-accept SDK licenses; open Android Studio's SDK Manager once."
+        fi
+    fi
+
     # ---- 3. adb (platform-tools) -------------------------------------------
     if command -v adb >/dev/null 2>&1; then
         ok "adb on PATH: $(adb version | head -1)"
@@ -71,6 +93,9 @@ fi
 bold "Checking optional tooling..."
 if command -v just >/dev/null 2>&1; then
     ok "just $(just --version)"
+elif command -v brew >/dev/null 2>&1; then
+    warn "'just' not installed — installing via Homebrew..."
+    brew install just && ok "just $(just --version)" || warn "Could not install 'just' automatically."
 else
     warn "'just' not installed (optional). On macOS: brew install just"
 fi
