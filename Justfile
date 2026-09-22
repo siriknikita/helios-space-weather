@@ -38,9 +38,12 @@ _assemble: _bootstrap
 # Alias kept for discoverability.
 build-debug: build
 
-# Compile the minified, debug-signed release APK.
+# Compile the minified release APK (signed with signing/release.jks when that local
+# folder exists, else the debug key) and copy it to release/Helios-<version>.apk.
 build-release: _bootstrap
     ./gradlew :app:assembleRelease
+    @mkdir -p release
+    @cp {{release_apk}} "release/Helios-$(sed -n 's/.*versionName = "\(.*\)".*/\1/p' app/build.gradle.kts | head -1).apk"
 
 # Build the signed release APK and publish it as a GitHub release with the APK attached.
 # Tag defaults to v<versionName> (read from app/build.gradle.kts); override e.g. `just release v1.2.0`.

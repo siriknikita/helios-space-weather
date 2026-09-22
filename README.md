@@ -125,6 +125,7 @@ just run          # build, install, and launch on a connected device
 just test         # unit tests
 just check        # lint + tests + assemble (pre-push gate)
 just copy-apk     # copy the built APK to the macOS clipboard
+just build-release  # signed release APK, copied to release/
 ```
 
 …or use Gradle directly:

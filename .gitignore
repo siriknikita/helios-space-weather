@@ -36,9 +36,13 @@ captures/
 # Kotlin
 .kotlin/
 
-# Keystore files (never commit signing material)
+# Keystore files (never commit signing material - this repository is PUBLIC)
 *.jks
 *.keystore
+# The release key and its password live here, on the build machine only
+signing/
+# Release APK copies
+release/
 
 # NOTE: gradle/wrapper/gradle-wrapper.jar is intentionally NOT ignored — it must be
 # committed so the project builds on a clean checkout without a local Gradle install.

@@ -13,7 +13,7 @@ Use the `Justfile` recipes (run `just` to list them) rather than calling Gradle 
 |---|---|
 | Bootstrap toolchain (writes `local.properties`) | `just setup` |
 | Build debug APK | `just build` |
-| Build minified, debug-signed release APK | `just build-release` |
+| Build minified, signed release APK (copied to `release/`) | `just build-release` |
 | Install + launch on a connected device | `just run` |
 | Unit tests | `just test` |
 | Android Lint (debug) | `just lint` |
@@ -50,9 +50,11 @@ Clean Architecture with an **MVI** UI layer. Dependencies point inward — never
 - **Per-app locale (en/uk):** language switches at runtime via `AppCompatDelegate.setApplicationLocales`.
   Notification copy must resolve against the active locale too. New user-facing strings go in both
   `values/` and `values-uk/` (resource set is restricted to `en` + `uk`).
-- **Release signing:** the release build is signed with the Android **debug key** (see
-  `app/build.gradle.kts`) so `assembleRelease` produces an installable `app-release.apk` with no
-  committed secrets. Swap in a real upload keystore there if this ever ships to a store.
+- **Release signing:** release builds are signed with the app's own key in `signing/`
+  (`release.jks`, password in `signing.properties`). **This repository is public, so `signing/`
+  is gitignored and exists only on the build machine** — back it up outside git; Android
+  installs an update only over an app signed with the same key. A fresh clone without it falls
+  back to the Android debug key, so `assembleRelease` still produces an installable APK.
 - **APKs are gitignored** (`*.apk`) — `fd`/`rg` won't list built APKs; that's expected, not a missing
   build. Never commit APKs, keystores (`*.jks`/`*.keystore`), or `local.properties`.
 - Kotlin official code style (`kotlin.code.style=official`). Match the surrounding file's idiom.
