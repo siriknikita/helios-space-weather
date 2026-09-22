@@ -24,7 +24,7 @@
     <string name="threat_desc_storm_extreme">Extreme storm. Aurora near the equator; major infrastructure impact possible.</string>
 
     <!-- Dashboard. -->
-    <string name="dashboard_title">Helios</string>
+    <string name="dashboard_title" translatable="false">Helios</string>
     <string name="dashboard_subtitle">Planetary Kp Index</string>
     <string name="unit_kp">KP</string>
     <string name="section_timeline">History &amp; Forecast</string>
